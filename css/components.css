@@ -1,129 +1,129 @@
-/* Reusable building blocks: cards, buttons, inputs, stats and tables. */
+/* Reusable building blocks: the moon, inputs, buttons, search results, small text. */
 
-.card {
-  margin: 0 0 1rem;
-  padding: 1.25rem;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+/* ---------- The moon drawing ---------- */
+
+.moon-disc {
+  display: block;
+  flex: none;
 }
 
-.lead {
-  color: var(--muted);
-  margin-bottom: 1.25rem;
+.moon-lit {
+  fill: var(--bone);
 }
 
-.note,
-.message,
-.current {
-  color: var(--muted);
-  font-size: 0.9rem;
+.moon-sea {
+  fill: #7d7f93;
+  opacity: 0.3;
 }
 
-/* ---------- Forms and buttons ---------- */
+.moon-dark {
+  fill: var(--moon-dark);
+  stroke: var(--line);
+  stroke-width: 2;
+}
+
+/* ---------- Location search and date ---------- */
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem 1rem;
+  align-items: start;
+}
+
+.picker .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
 
 input {
-  width: 100%;
-  padding: 0.6rem 0.75rem;
-  background: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
+  min-width: 0;
+  padding: 0.65rem 0.85rem;
+  background: var(--panel);
+  color: var(--bone);
+  border: 1px solid var(--line);
   border-radius: 8px;
   font: inherit;
 }
 
-.row {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+input[type="search"] {
+  flex: 1 1 14rem;
+}
+
+input[type="date"] {
+  min-width: 11rem;
 }
 
 .btn {
-  padding: 0.6rem 1rem;
-  background: var(--accent);
-  color: var(--on-accent);
-  border: 0;
+  padding: 0.65rem 1.1rem;
+  background: var(--bone);
+  color: var(--ink);
+  border: 1px solid var(--bone);
   border-radius: 8px;
   font: inherit;
   font-weight: 600;
   cursor: pointer;
 }
 
-.btn-light {
+.btn:hover {
+  background: #fff;
+}
+
+.btn-ghost {
   background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
+  color: var(--bone);
+  border-color: var(--line);
+}
+
+.btn-ghost:hover {
+  background: transparent;
+  border-color: var(--bone);
 }
 
 .results {
-  display: grid;
-  gap: 0.4rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.results:empty {
+  display: none;
 }
 
 .result {
-  padding: 0.6rem 0.75rem;
-  background: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.25rem;
+  background: none;
+  color: var(--bone);
+  border: 0;
+  border-bottom: 1px solid var(--line);
   font: inherit;
   text-align: left;
   cursor: pointer;
 }
 
 .result:hover {
-  border-color: var(--accent);
+  background: var(--panel);
 }
 
-/* ---------- Result numbers ---------- */
+/* ---------- Small supporting text ---------- */
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 0.75rem;
+.lead {
+  max-width: 40rem;
+  color: var(--muted);
 }
 
-.stat {
-  display: flex;
-  flex-direction: column;
-  padding: 0.9rem;
-  background: var(--bg);
-  border-radius: 8px;
-}
-
-.stat-label,
-.stat-note {
+.current,
+.message,
+.note {
+  margin: 0.5rem 0 0;
   color: var(--muted);
   font-size: 0.9rem;
 }
 
-.stat-value {
-  color: var(--accent);
-  font-size: 1.6rem;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-/* ---------- Table ---------- */
-
-.table-wrap {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 0.55rem 0.5rem;
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-  white-space: nowrap;
-}
-
-th {
-  color: var(--muted);
-  font-weight: 600;
+@media (max-width: 640px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
 }

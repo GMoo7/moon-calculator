@@ -1,4 +1,4 @@
-// The "Your location" box. Used on the Calculator and the 7-Day Table pages.
+// The city search box. Used on the Calculator and the 7-Day Table pages.
 // The visitor can search for a city or use their device's location.
 
 import { el } from "../lib/dom.js";
@@ -8,7 +8,7 @@ import { browserTimeZone } from "../lib/time.js";
 
 // onChange(location) is called every time the visitor picks a place.
 export function createLocationPicker(onChange) {
-  const box = el("section", "card");
+  const box = el("div", "picker");
   const current = el("p", "current");
   const form = el("form", "row");
   const message = el("p", "message");
@@ -16,17 +16,19 @@ export function createLocationPicker(onChange) {
 
   const input = el("input");
   input.type = "search";
-  input.placeholder = "Search a city, e.g. Rome";
+  input.placeholder = "Search for a city, e.g. Rome";
   input.required = true;
   input.setAttribute("aria-label", "City name");
 
   const searchButton = el("button", "btn", "Search");
   searchButton.type = "submit";
-  const gpsButton = el("button", "btn btn-light", "📍 Use my location");
+  const gpsButton = el("button", "btn btn-ghost", "Use my location");
   gpsButton.type = "button";
 
   function showCurrent(location) {
-    current.textContent = location ? `Showing: ${location.name}` : "No place chosen yet.";
+    current.textContent = location
+      ? `Showing ${location.name}`
+      : "Search for a city or use your location.";
   }
 
   function choose(location) {
@@ -75,8 +77,8 @@ export function createLocationPicker(onChange) {
     );
   });
 
-  form.append(input, searchButton);
-  box.append(el("h2", "", "Your location"), current, form, gpsButton, message, results);
+  form.append(input, searchButton, gpsButton);
+  box.append(form, current, message, results);
   showCurrent(loadLocation());
   return box;
 }

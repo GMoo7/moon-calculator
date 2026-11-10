@@ -98,7 +98,7 @@ export function moonPhase(date) {
   const angle = moonCoords(d).lon - sunLongitude(d);
   const fraction = (((angle / (2 * Math.PI)) % 1) + 1) % 1; // 0 = new, 0.5 = full
   const phase = PHASES[Math.round(fraction * 8) % 8];
-  return { ...phase, illumination: (1 - Math.cos(angle)) / 2 };
+  return { ...phase, fraction, illumination: (1 - Math.cos(angle)) / 2 };
 }
 
 // Height of the moon above the "rising line". Positive = risen.

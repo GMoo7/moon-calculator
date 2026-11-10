@@ -1,0 +1,178 @@
+/* Styles that belong to one screen: the home result, the week table, the about text. */
+
+/* ---------- Home: the answer ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem 3rem;
+  align-items: center;
+  margin-top: 2.75rem;
+}
+
+.hero-date {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.hero-place {
+  margin: 0 0 1.75rem;
+  color: var(--muted);
+}
+
+.hero-label {
+  margin: 0;
+  color: var(--muted);
+}
+
+.hero-time {
+  margin: 0;
+  font-size: clamp(4.5rem, 15vw, 9rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-time.is-text {
+  font-size: clamp(2.25rem, 7vw, 3.75rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.hero-sub {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 3rem;
+  margin: 2rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.fact dt {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.fact dd {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.hero-moon .moon-disc {
+  width: clamp(150px, 26vw, 280px);
+  height: auto;
+  filter: drop-shadow(0 0 48px rgba(239, 233, 214, 0.16));
+}
+
+/* The one animation on the site: the moon rises into view. */
+.rise {
+  animation: rise 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    grid-template-columns: 1fr;
+    margin-top: 2rem;
+  }
+
+  .hero-moon {
+    order: -1;
+  }
+}
+
+/* ---------- Week: the table ---------- */
+
+.week {
+  margin-top: 2rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.7rem 0.6rem 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+td {
+  font-variant-numeric: tabular-nums;
+}
+
+tr.today td {
+  font-weight: 700;
+}
+
+.phase-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.dim {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* On phones there is no room for the phase name, so only the moon drawing shows.
+   The name stays in the page for screen readers. */
+@media (max-width: 640px) {
+  th,
+  td {
+    padding-right: 0.5rem;
+  }
+
+  .phase-name,
+  .dim {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/* ---------- About: reading text ---------- */
+
+.prose {
+  max-width: 40rem;
+}
+
+.prose h2 {
+  margin-top: 2rem;
+}

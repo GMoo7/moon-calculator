@@ -12,10 +12,12 @@ build step.
 moon-calculator/
 ├── index.html            The one web page. It loads the styles and js/app.js.
 ├── RULES.md              The rules for working on this project. Read first.
+├── fonts/                The site font (Bricolage Grotesque) and its licence.
 ├── css/
-│   ├── base.css          Colours, fonts, basic text.
+│   ├── base.css          Colours, font, basic text. Change the look here first.
 │   ├── layout.css        Header, main area and footer positions.
-│   └── components.css    Cards, buttons, inputs, result numbers, table.
+│   ├── components.css    Pieces used on several screens: moon, inputs, buttons.
+│   └── pages.css         Styles for one screen: home result, week table, about text.
 └── js/
     ├── app.js            Starts the site and shows the right screen.
     ├── config.js         Site name, menu and other settings in one place.
@@ -26,6 +28,7 @@ moon-calculator/
     ├── components/       Pieces shared by several screens (one copy each)
     │   ├── header.js     Top bar and menu.
     │   ├── footer.js     Bottom text.
+    │   ├── moonDisc.js   Draws the moon with the right phase (SVG).
     │   └── locationPicker.js   City search / "use my location" box.
     └── lib/              Helper code with no screen of its own
         ├── moon.js       The moon maths (position, rise, set, phase).
