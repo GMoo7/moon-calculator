@@ -20,11 +20,14 @@ moon-calculator/
 │   └── pages.css         Styles for one screen: home result, week table, about text.
 └── js/
     ├── app.js            Starts the site and shows the right screen.
-    ├── config.js         Site name, menu and other settings in one place.
+    ├── config.js         Site name, menu, one-tap cities and other settings.
+    ├── content/          ALL THE WORDS. Edit text here, no coding needed.
+    │   ├── homeText.js   Tips shown under the calculator.
+    │   └── aboutText.js  The "How it works" text and moon phase descriptions.
     ├── pages/            ONE FILE PER SCREEN
     │   ├── home.js       The calculator.
     │   ├── week.js       The 7-day table.
-    │   └── about.js      How it works.
+    │   └── about.js      How it works, plus the moon phase guide.
     ├── components/       Pieces shared by several screens (one copy each)
     │   ├── header.js     Top bar and menu.
     │   ├── footer.js     Bottom text.

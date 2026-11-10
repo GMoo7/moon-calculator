@@ -8,15 +8,15 @@ const EARTH_RADIUS_KM = 6378.14;
 const REFRACTION = RAD * 0.5667;      // air bends light, so the moon looks higher
 const STEP_MS = 30 * 60 * 1000;       // we look at the sky every 30 minutes
 
-const PHASES = [
-  { name: "New Moon", emoji: "🌑" },
-  { name: "Waxing Crescent", emoji: "🌒" },
-  { name: "First Quarter", emoji: "🌓" },
-  { name: "Waxing Gibbous", emoji: "🌔" },
-  { name: "Full Moon", emoji: "🌕" },
-  { name: "Waning Gibbous", emoji: "🌖" },
-  { name: "Last Quarter", emoji: "🌗" },
-  { name: "Waning Crescent", emoji: "🌘" },
+export const PHASES = [
+  { name: "New Moon" },
+  { name: "Waxing Crescent" },
+  { name: "First Quarter" },
+  { name: "Waxing Gibbous" },
+  { name: "Full Moon" },
+  { name: "Waning Gibbous" },
+  { name: "Last Quarter" },
+  { name: "Waning Crescent" },
 ];
 
 // Days since 1 Jan 2000 12:00 UTC. All the formulas below use this number.
@@ -92,7 +92,7 @@ export function moonPosition(date, lat, lng) {
   return { altitude, riseAltitude, bearing: (fromSouth / RAD + 180 + 360) % 360 };
 }
 
-// Phase name, emoji and how much of the moon is lit (0 to 1).
+// Phase name and how much of the moon is lit (0 to 1).
 export function moonPhase(date) {
   const d = daysSince2000(date);
   const angle = moonCoords(d).lon - sunLongitude(d);

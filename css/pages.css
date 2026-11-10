@@ -176,3 +176,41 @@ tr.today td {
 .prose h2 {
   margin-top: 2rem;
 }
+
+.prose h3 {
+  margin: 1.5rem 0 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Tips under the home result: a divider separates them from the tool. */
+.tips {
+  margin-top: 4rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--line);
+}
+
+/* The eight moon phases on the About screen. */
+.phase-guide {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.phase-guide li {
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.prose .phase-guide h3 {
+  margin: 0 0 0.15rem;
+}
+
+.phase-guide p {
+  margin: 0;
+  color: var(--muted);
+}

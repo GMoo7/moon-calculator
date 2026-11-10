@@ -1,17 +1,19 @@
 // HOME screen: pick a place and a date, see the moonrise time as the headline,
-// with moonset, phase and a drawing of the moon next to it.
+// with moonset, phase and a drawing of the moon next to it. Tips go underneath.
 
 import { el } from "../lib/dom.js";
 import { createLocationPicker } from "../components/locationPicker.js";
 import { createMoonDisc } from "../components/moonDisc.js";
+import { HOME_TIPS, HOME_TIPS_TITLE } from "../content/homeText.js";
 import { loadLocation } from "../lib/storage.js";
-import { getMoonDay } from "../lib/moonDay.js";
+import { getMoonDay, riseShiftMinutes } from "../lib/moonDay.js";
 import { moonPhase } from "../lib/moon.js";
-import { browserTimeZone, todayString } from "../lib/time.js";
+import { addDays, browserTimeZone, todayString } from "../lib/time.js";
 import {
   formatBearing,
   formatDate,
   formatPercent,
+  formatShift,
   formatTime,
   missingText,
 } from "../lib/format.js";
@@ -20,6 +22,14 @@ import {
 function fact(label, value) {
   const box = el("div", "fact");
   box.append(el("dt", "", label), el("dd", "", value));
+  return box;
+}
+
+// The questions and answers under the result. Words come from js/content/homeText.js.
+function buildTips() {
+  const box = el("section", "prose tips");
+  box.append(el("h2", "", HOME_TIPS_TITLE));
+  for (const tip of HOME_TIPS) box.append(el("h3", "", tip.question), el("p", "", tip.answer));
   return box;
 }
 
@@ -32,6 +42,18 @@ export function renderHome(root) {
   dateInput.value = todayString(location?.timezone || browserTimeZone());
   dateInput.setAttribute("aria-label", "Date");
   dateInput.addEventListener("input", showResult);
+
+  // A small "‹" or "›" button that moves the date by one day.
+  function stepButton(label, symbol, days) {
+    const button = el("button", "btn btn-ghost btn-step", symbol);
+    button.type = "button";
+    button.setAttribute("aria-label", label);
+    button.addEventListener("click", () => {
+      dateInput.value = addDays(dateInput.value || todayString(browserTimeZone()), days);
+      showResult();
+    });
+    return button;
+  }
 
   // The big text on the left: either the moonrise, or (before a city is chosen) today's phase.
   function buildMain(date, day, phase) {
@@ -62,7 +84,11 @@ export function renderHome(root) {
       el("p", day.rise ? "hero-time" : "hero-time is-text", riseText)
     );
     if (day.bearing !== null) {
-      main.append(el("p", "hero-sub", `Look ${formatBearing(day.bearing)} on the horizon`));
+      main.append(el("p", "hero-sub", `Look ${formatBearing(day.bearing)} on the horizon.`));
+    }
+    if (day.rise) {
+      const shift = formatShift(riseShiftMinutes(location, date, day.rise));
+      if (shift) main.append(el("p", "hero-sub", shift));
     }
     main.append(facts, el("p", "note", `Times are in ${zone} time.`));
     return main;
@@ -85,20 +111,24 @@ export function renderHome(root) {
     result.replaceChildren(buildMain(date, day, phase), moon);
   }
 
+  const dateField = el("div", "date-field");
+  dateField.append(stepButton("Previous day", "‹", -1), dateInput, stepButton("Next day", "›", 1));
+
   const controls = el("div", "controls");
   controls.append(
     createLocationPicker((chosen) => {
       location = chosen;
       showResult();
     }),
-    dateInput
+    dateField
   );
 
   root.append(
     el("h1", "", "What time does the moon rise?"),
     el("p", "lead", "Moonrise and moonset times for any city and date, with the moon phase and the direction to look."),
     controls,
-    result
+    result,
+    buildTips()
   );
   showResult();
 }

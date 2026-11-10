@@ -1,6 +1,7 @@
 // The city search box. Used on the Calculator and the 7-Day Table pages.
 // The visitor can search for a city or use their device's location.
 
+import { POPULAR_CITIES } from "../config.js";
 import { el } from "../lib/dom.js";
 import { searchCity } from "../lib/geocode.js";
 import { loadLocation, saveLocation } from "../lib/storage.js";
@@ -77,8 +78,17 @@ export function createLocationPicker(onChange) {
     );
   });
 
+  // One-tap cities, so a first-time visitor sees a result in one click.
+  const popular = el("div", "popular");
+  for (const city of POPULAR_CITIES) {
+    const chip = el("button", "chip", city.name.split(",")[0]);
+    chip.type = "button";
+    chip.addEventListener("click", () => choose(city));
+    popular.append(chip);
+  }
+
   form.append(input, searchButton, gpsButton);
-  box.append(form, current, message, results);
+  box.append(form, popular, current, message, results);
   showCurrent(loadLocation());
   return box;
 }

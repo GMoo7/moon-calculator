@@ -34,6 +34,15 @@ export function formatPercent(fraction) {
   return `${Math.round(fraction * 100)}%`;
 }
 
+// 52 -> "52 minutes later than the day before."
+export function formatShift(minutes) {
+  if (minutes === null) return "";
+  const size = Math.abs(minutes);
+  if (size < 2) return "About the same time as the day before.";
+  const unit = size === 1 ? "minute" : "minutes";
+  return `${size} ${unit} ${minutes > 0 ? "later" : "earlier"} than the day before.`;
+}
+
 // What to show when the moon does not rise or set on a day.
 export function missingText(status, eventName) {
   if (status === "always-up") return "Moon stays up all day";
