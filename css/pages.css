@@ -2,12 +2,30 @@
 
 /* ---------- Home: the answer ---------- */
 
-.hero {
+/* Heading, search, date arrows and result text run down the left.
+   The moon sits on the right and stays in view while you scroll. */
+.stage {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 2rem 3rem;
-  align-items: center;
-  margin-top: 2.75rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 3rem;
+  align-items: start;
+}
+
+/* min-width 0 lets wide content (the city buttons) scroll instead of stretching the page. */
+.stage > * {
+  grid-column: 1;
+  min-width: 0;
+}
+
+.stage > .hero-moon {
+  grid-column: 2;
+  grid-row: 1 / span 6;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.stage > .date-field {
+  margin: 2rem 0 1.75rem;
 }
 
 .hero-date {
@@ -89,14 +107,37 @@
   }
 }
 
+/* On phones everything stacks: the moon comes right after the city box,
+   then the date arrows, then the text. */
 @media (max-width: 640px) {
-  .hero {
-    grid-template-columns: 1fr;
-    margin-top: 2rem;
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .hero-moon {
-    order: -1;
+  /* The intro sentence is dropped on phones so the moon and arrows fit on one screen. */
+  .stage > .lead {
+    display: none;
+  }
+
+  .stage > .hero-moon {
+    grid-column: 1;
+    grid-row: auto;
+    position: static;
+    order: 1;
+    margin-top: 1.25rem;
+  }
+
+  .hero-moon .moon-disc {
+    width: 120px;
+  }
+
+  .stage > .date-field {
+    order: 2;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .stage > .hero-text {
+    order: 3;
   }
 }
 

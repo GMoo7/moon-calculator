@@ -52,6 +52,7 @@ export function createMoonDisc(fraction, options = {}) {
 
   const clip = svgEl("clipPath", { id: clipId });
   clip.append(svgEl("path", { d: litOutline(fraction) }));
+  svg.shownFraction = fraction; // remembered, so a later phase change can start from here
 
   const lit = svgEl("g", { "clip-path": `url(#${clipId})` });
   lit.append(svgEl("circle", { r: RADIUS, class: "moon-lit" }));
@@ -63,4 +64,31 @@ export function createMoonDisc(fraction, options = {}) {
   body.append(svgEl("circle", { r: RADIUS, class: "moon-dark" }), lit);
   svg.append(clip, body);
   return svg;
+}
+
+// Smoothly changes a moon drawing to a new phase, so you can watch the lit part
+// sweep across when the date changes. The disc is reused, not redrawn.
+export function animateMoonPhase(svg, toFraction, duration = 600) {
+  const path = svg.querySelector("clipPath path");
+  const from = svg.shownFraction;
+  const change = ((toFraction - from + 1.5) % 1) - 0.5; // shortest way round the cycle
+  const wrap = (value) => ((value % 1) + 1) % 1;
+  cancelAnimationFrame(svg.frame);
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion || Math.abs(change) < 0.0005) {
+    svg.shownFraction = toFraction;
+    path.setAttribute("d", litOutline(toFraction));
+    return;
+  }
+
+  const startTime = performance.now();
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2; // gentle start and finish
+    svg.shownFraction = progress < 1 ? wrap(from + change * eased) : toFraction;
+    path.setAttribute("d", litOutline(svg.shownFraction));
+    if (progress < 1) svg.frame = requestAnimationFrame(step);
+  }
+  svg.frame = requestAnimationFrame(step);
 }

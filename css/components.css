@@ -24,13 +24,6 @@
 
 /* ---------- Location search and date ---------- */
 
-.controls {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.75rem 1rem;
-  align-items: start;
-}
-
 .picker .row {
   display: flex;
   flex-wrap: wrap;
@@ -135,6 +128,7 @@ input[type="date"] {
 .date-field {
   display: flex;
   gap: 0.4rem;
+  max-width: 22rem;
 }
 
 .btn-step {
@@ -159,8 +153,14 @@ input[type="date"] {
 }
 
 @media (max-width: 640px) {
-  .controls {
-    grid-template-columns: 1fr;
+  .popular {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .chip {
+    flex: none;
   }
 
   .date-field input {
