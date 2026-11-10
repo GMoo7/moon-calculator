@@ -1,0 +1,43 @@
+/* Colours, fonts and basic text styles used everywhere. */
+
+:root {
+  --bg: #0b1026;
+  --card: #151b3a;
+  --border: #2a3366;
+  --text: #e8ebff;
+  --muted: #9aa3d6;
+  --accent: #f5d76e;
+  --on-accent: #1b1b2f;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: var(--accent);
+}

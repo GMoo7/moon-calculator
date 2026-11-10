@@ -1,0 +1,53 @@
+/* Where things sit on the page: header, main area, footer. */
+
+#header {
+  border-bottom: 1px solid var(--border);
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.menu {
+  display: flex;
+  gap: 1rem;
+}
+
+.menu a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.menu a.active,
+.menu a:hover {
+  color: var(--accent);
+}
+
+#page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+#footer {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
