@@ -33,15 +33,26 @@ moon-calculator/
     │   ├── footer.js     Bottom text.
     │   ├── moonDisc.js   Draws the moon with the right phase (SVG).
     │   └── locationPicker.js   City search / "use my location" box.
-    └── lib/              Helper code with no screen of its own
-        ├── moon.js       The moon maths (position, rise, set, phase).
-        ├── moonDay.js    Everything about the moon for one day and place.
-        ├── time.js       Dates and time zones.
-        ├── format.js     Turns numbers into readable text.
-        ├── geocode.js    City name to coordinates.
-        ├── storage.js    Remembers the chosen location in the browser.
-        └── dom.js        Small helper for building page elements.
+    ├── lib/              Helper code with no screen of its own
+    │   ├── moon.js       The moon maths (rise, set, phase, direction). The ONLY file that talks to the astronomy library.
+    │   ├── moonDay.js    Everything about the moon for one day and place.
+    │   ├── time.js       Dates and time zones.
+    │   ├── format.js     Turns numbers into readable text.
+    │   ├── geocode.js    City name to coordinates.
+    │   ├── storage.js    Remembers the chosen location in the browser.
+    │   └── dom.js        Small helper for building page elements.
+    └── vendor/           Other people's code, copied in unchanged (do not edit)
+        ├── astronomy.min.js   Astronomy Engine, the library that does the sky maths.
+        ├── LICENSE-astronomy-engine-MIT.txt   Its licence.
+        └── README.md     How that file was made and how to update it.
 ```
+
+## How accurate are the times?
+
+The moon maths comes from [Astronomy Engine](https://github.com/cosinekitty/astronomy)
+(MIT licence). Checked against the `ephem` Python library over 16 cities and
+about 1,170 days (including polar and daylight-saving days), moonrise and
+moonset agree to a median of 0.3 minutes and never more than 2.8 minutes.
 
 ## How a screen gets shown
 
