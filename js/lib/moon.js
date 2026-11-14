@@ -19,16 +19,8 @@ const SET = -1;
 // Moon centre this far below the horizon (degrees) still shows its top edge.
 const TOP_EDGE_DEGREES = -0.25;
 
-export const PHASES = [
-  { name: "New Moon" },
-  { name: "Waxing Crescent" },
-  { name: "First Quarter" },
-  { name: "Waxing Gibbous" },
-  { name: "Full Moon" },
-  { name: "Waning Gibbous" },
-  { name: "Last Quarter" },
-  { name: "Waning Crescent" },
-];
+// The moon has eight named phases (names live in js/content/<language>/ui.js).
+export const PHASE_COUNT = 8;
 
 // Where the moon is in the sky, as azimuth (compass degrees, clockwise
 // from north) and altitude (degrees above the horizon, air bending included).
@@ -42,12 +34,13 @@ export function moonPosition(date, lat, lng) {
   return { bearing: skyPosition(date, new Observer(lat, lng, 0)).azimuth };
 }
 
-// Phase name and how much of the moon is lit (0 to 1).
+// Which of the eight phases it is (index), how far round the cycle (fraction)
+// and how much of the moon is lit (illumination, 0 to 1).
 export function moonPhase(date) {
   const fraction = MoonPhase(date) / 360; // 0 = new, 0.5 = full
-  const phase = PHASES[Math.round(fraction * 8) % 8];
+  const index = Math.round(fraction * PHASE_COUNT) % PHASE_COUNT; // 0 = new moon ... 7
   const illumination = Illumination(Body.Moon, date).phase_fraction;
-  return { ...phase, fraction, illumination };
+  return { index, fraction, illumination };
 }
 
 // The first time the moon crosses the horizon in this direction, or null

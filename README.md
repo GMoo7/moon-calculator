@@ -1,51 +1,113 @@
 # Moonrise Calculator
 
 A free website that shows what time the moon rises and sets for any city and
-any date, plus the moon phase and the direction to look.
+any date, plus the moon phase and the direction to look. It comes in several
+languages (English, Italian, Spanish).
 
-It is plain HTML, CSS and JavaScript. There is nothing to install and no
-build step.
+The website itself is plain HTML, CSS and JavaScript, so visitors need nothing.
+To change words, languages or the domain you run one small command
+(`npm run build`, see below) that writes the HTML pages. You need
+[Node.js](https://nodejs.org) for that, nothing else.
 
 ## Folder map
 
 ```
 moon-calculator/
-├── index.html            The one web page. It loads the styles and js/app.js.
 ├── RULES.md              The rules for working on this project. Read first.
+├── package.json          Two shortcuts: "npm run build" and "npm run check".
 ├── fonts/                The site font (Bricolage Grotesque) and its licence.
 ├── css/
 │   ├── base.css          Colours, font, basic text. Change the look here first.
 │   ├── layout.css        Header, main area and footer positions.
 │   ├── components.css    Pieces used on several screens: moon, inputs, buttons.
 │   └── pages.css         Styles for one screen: home result, week table, about text.
-└── js/
-    ├── app.js            Starts the site and shows the right screen.
-    ├── config.js         Site name, menu, one-tap cities and other settings.
-    ├── content/          ALL THE WORDS. Edit text here, no coding needed.
-    │   ├── homeText.js   Tips shown under the calculator.
-    │   └── aboutText.js  The "How it works" text and moon phase descriptions.
-    ├── pages/            ONE FILE PER SCREEN
-    │   ├── home.js       The calculator.
-    │   ├── week.js       The 7-day table.
-    │   └── about.js      How it works, plus the moon phase guide.
-    ├── components/       Pieces shared by several screens (one copy each)
-    │   ├── header.js     Top bar and menu.
-    │   ├── footer.js     Bottom text.
-    │   ├── moonDisc.js   Draws the moon with the right phase (SVG).
-    │   └── locationPicker.js   City search / "use my location" box.
-    ├── lib/              Helper code with no screen of its own
-    │   ├── moon.js       The moon maths (rise, set, phase, direction). The ONLY file that talks to the astronomy library.
-    │   ├── moonDay.js    Everything about the moon for one day and place.
-    │   ├── time.js       Dates and time zones.
-    │   ├── format.js     Turns numbers into readable text.
-    │   ├── geocode.js    City name to coordinates.
-    │   ├── storage.js    Remembers the chosen location in the browser.
-    │   └── dom.js        Small helper for building page elements.
-    └── vendor/           Other people's code, copied in unchanged (do not edit)
-        ├── astronomy.min.js   Astronomy Engine, the library that does the sky maths.
-        ├── LICENSE-astronomy-engine-MIT.txt   Its licence.
-        └── README.md     How that file was made and how to update it.
+├── tools/                THE GENERATOR (runs on your computer, not in the browser)
+│   ├── site.json         Domain, list of languages, list of pages. Edit this.
+│   ├── build.mjs         Writes every page, the sitemap and robots.txt.
+│   ├── pageHtml.mjs      Builds one page: head tags, hreflang, header, footer.
+│   ├── pageBody.mjs      The page text as plain HTML, for search engines.
+│   ├── seoFiles.mjs      sitemap.xml, robots.txt, language chooser, 404 page.
+│   ├── urls.mjs          Address helpers shared by the files above.
+│   └── check.mjs         Checks the generated files for SEO mistakes.
+├── js/
+│   ├── app.js            Starts a page: loads the language, draws the screen.
+│   ├── config.js         One-tap cities and other settings.
+│   ├── content/          ALL THE WORDS, one folder per language (en, it, es).
+│   │   └── en/           Each language has the same four files:
+│   │       ├── ui.js     Buttons, labels, messages, phase names, city names.
+│   │       ├── home.js   Calculator title, intro and tips.
+│   │       ├── about.js  The "How it works" text and moon phase descriptions.
+│   │       └── meta.js   Page titles and descriptions for search engines.
+│   ├── pages/            ONE FILE PER SCREEN
+│   │   ├── home.js       The calculator.
+│   │   ├── week.js       The 7-day table.
+│   │   └── about.js      How it works, plus the moon phase guide.
+│   ├── components/       Pieces shared by several screens (one copy each)
+│   │   ├── moonDisc.js   Draws the moon with the right phase (SVG).
+│   │   └── locationPicker.js   City search / "use my location" box.
+│   ├── lib/              Helper code with no screen of its own
+│   │   ├── i18n.js       Loads the page's language and fills in {placeholders}.
+│   │   ├── moon.js       The moon maths (rise, set, phase, direction). The ONLY file that talks to the astronomy library.
+│   │   ├── moonDay.js    Everything about the moon for one day and place.
+│   │   ├── time.js       Dates and time zones.
+│   │   ├── format.js     Turns numbers into readable text.
+│   │   ├── geocode.js    City name to coordinates.
+│   │   ├── storage.js    Remembers the chosen location in the browser.
+│   │   └── dom.js        Small helper for building page elements.
+│   └── vendor/           Other people's code, copied in unchanged (do not edit)
+│       ├── astronomy.min.js   Astronomy Engine, the library that does the sky maths.
+│       ├── LICENSE-astronomy-engine-MIT.txt   Its licence.
+│       └── README.md     How that file was made and how to update it.
+│
+│   GENERATED by `npm run build`. Never edit these by hand:
+├── index.html            Language chooser (also the "x-default" page).
+├── en/  it/  es/         One folder per language: index.html (calculator),
+│                         week/index.html, about/index.html.
+├── 404.html  sitemap.xml  robots.txt   (and CNAME once you use your own domain)
 ```
+
+## How a page gets shown
+
+1. Each address is a real file, for example `/it/week/` is `it/week/index.html`.
+2. That file already contains the page's words, the header and footer, and the
+   search-engine tags (title, description, canonical, hreflang). Search engines
+   read it without running any JavaScript.
+3. `js/app.js` reads `<html lang>` and `<body data-page>`, loads that language
+   from `js/content/`, and replaces the plain text with the live screen from
+   `js/pages/`.
+
+## Changing words, then publishing
+
+1. Edit the text in `js/content/<language>/`.
+2. Run `npm run build` (writes the pages) and `npm run check` (looks for mistakes).
+3. Commit and push. GitHub Pages publishes it.
+
+`npm run check` reads the finished files and makes sure every page points to
+itself as canonical, every hreflang address exists, the language versions
+point at each other, the sitemap matches, and no link is broken.
+
+## Adding a language
+
+1. Copy a folder in `js/content/` (for example `en`) to the new language code
+   (for example `de`) and translate the four files. Keep the `{placeholders}`.
+2. Add the code to `"languages"` in `tools/site.json`.
+3. `npm run build` and `npm run check`. Every page, hreflang tag and the sitemap
+   are updated for you. Have a native speaker read the translation first.
+
+## Using your own domain
+
+1. Buy the domain and set it up for GitHub Pages (repo Settings, Pages, Custom domain).
+2. Put the new address in `"siteUrl"` in `tools/site.json`, for example
+   `"https://yourdomain.com"`.
+3. `npm run build`. All canonical, hreflang and sitemap addresses change, and a
+   `CNAME` file is written. Then `npm run check`, commit and push.
+
+## Adding a new screen
+
+1. Create `js/pages/yourpage.js` that exports `renderYourpage(root)`.
+2. Add it to `PAGES` in `js/app.js`.
+3. Add it to `"pages"` in `tools/site.json`, a body for it in `tools/pageBody.mjs`,
+   and its title and description in each language's `meta.js` and `ui.js`.
 
 ## How accurate are the times?
 
@@ -54,29 +116,16 @@ The moon maths comes from [Astronomy Engine](https://github.com/cosinekitty/astr
 about 1,170 days (including polar and daylight-saving days), moonrise and
 moonset agree to a median of 0.3 minutes and never more than 2.8 minutes.
 
-## How a screen gets shown
-
-1. The address ends in `#/home`, `#/week` or `#/about`.
-2. `js/app.js` finds that name in its `PAGES` list and calls the matching
-   function from `js/pages/`.
-3. The header and footer come from `js/components/` and are the same everywhere.
-
-## Adding a new screen
-
-1. Create `js/pages/yourpage.js` that exports `renderYourpage(root)`.
-2. Add it to `PAGES` in `js/app.js`.
-3. Add a menu entry to `NAV` in `js/config.js`.
-
 ## Running it on your computer
 
-Browsers block JavaScript modules when you double-click `index.html`, so use a
+Browsers block JavaScript modules when you double-click a page, so use a
 tiny local server instead:
 
 ```
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000>.
+Then open <http://localhost:8000/en/> (or `/it/`, `/es/`).
 
 ## Putting it online (GitHub Pages)
 

@@ -1,11 +1,12 @@
 // City search: turns a name like "Rome" into coordinates and a time zone.
-// Uses the free Open-Meteo geocoding service.
+// Uses the free Open-Meteo geocoding service. Results come in the page's language.
 
 import { GEOCODE_URL } from "../config.js";
+import { text } from "./i18n.js";
 
 // Returns a list of { name, lat, lng, timezone }. Empty list = nothing found.
 export async function searchCity(query) {
-  const url = `${GEOCODE_URL}?name=${encodeURIComponent(query)}&count=5&language=en&format=json`;
+  const url = `${GEOCODE_URL}?name=${encodeURIComponent(query)}&count=5&language=${text.lang}&format=json`;
   const response = await fetch(url);
   if (!response.ok) throw new Error("City search failed");
 

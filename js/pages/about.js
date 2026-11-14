@@ -1,17 +1,10 @@
 // ABOUT screen: plain-language explanation of how the calculator works,
-// including a guide to the eight moon phases. The words live in js/content/aboutText.js.
+// including a guide to the eight moon phases. The words live in js/content/<language>/about.js.
 
 import { el } from "../lib/dom.js";
 import { createMoonDisc } from "../components/moonDisc.js";
-import { PHASES } from "../lib/moon.js";
-import {
-  ABOUT_INTRO,
-  ABOUT_OUTRO,
-  ABOUT_TITLE,
-  PHASES_INTRO,
-  PHASES_TITLE,
-  PHASE_TEXT,
-} from "../content/aboutText.js";
+import { text } from "../lib/i18n.js";
+import { PHASE_COUNT } from "../lib/moon.js";
 
 // A heading with a paragraph under it.
 function textSection(item) {
@@ -24,22 +17,22 @@ function textSection(item) {
 function phaseGuide() {
   const section = el("section");
   const list = el("ul", "phase-guide");
-  PHASES.forEach((phase, index) => {
+  for (let index = 0; index < PHASE_COUNT; index++) {
     const item = el("li");
     const words = el("div");
-    words.append(el("h3", "", phase.name), el("p", "", PHASE_TEXT[index]));
-    item.append(createMoonDisc(index / PHASES.length, { size: 52 }), words);
+    words.append(el("h3", "", text.ui.phaseNames[index]), el("p", "", text.about.phaseText[index]));
+    item.append(createMoonDisc(index / PHASE_COUNT, { size: 52 }), words);
     list.append(item);
-  });
-  section.append(el("h2", "", PHASES_TITLE), el("p", "", PHASES_INTRO), list);
+  }
+  section.append(el("h2", "", text.about.phasesTitle), el("p", "", text.about.phasesIntro), list);
   return section;
 }
 
 export function renderAbout(root) {
   const page = el("div", "prose");
-  page.append(el("h1", "", ABOUT_TITLE));
-  for (const item of ABOUT_INTRO) page.append(textSection(item));
+  page.append(el("h1", "", text.about.title));
+  for (const item of text.about.intro) page.append(textSection(item));
   page.append(phaseGuide());
-  for (const item of ABOUT_OUTRO) page.append(textSection(item));
+  for (const item of text.about.outro) page.append(textSection(item));
   root.append(page);
 }

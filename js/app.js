@@ -1,32 +1,25 @@
-// Starts the site. Reads the web address (#/home, #/week, #/about)
-// and draws the matching screen between the header and the footer.
+// Starts the site. Each page is its own real address (/en/, /it/week/ ...) written
+// by tools/build.mjs, which sets <html lang> and <body data-page>. This file reads
+// those two values, loads the language and draws the matching screen.
 
-import { DEFAULT_PAGE } from "./config.js";
-import { renderHeader } from "./components/header.js";
-import { renderFooter } from "./components/footer.js";
+import { createMoonDisc } from "./components/moonDisc.js";
+import { loadLanguage } from "./lib/i18n.js";
 import { renderHome } from "./pages/home.js";
 import { renderWeek } from "./pages/week.js";
 import { renderAbout } from "./pages/about.js";
 
-// One line per screen: the address name, and the function that draws it.
+// One line per screen: the page name, and the function that draws it.
 const PAGES = {
   home: renderHome,
   week: renderWeek,
   about: renderAbout,
 };
 
-function showPage() {
-  const requested = location.hash.replace("#/", "");
-  const pageId = PAGES[requested] ? requested : DEFAULT_PAGE;
+await loadLanguage(document.documentElement.lang);
 
-  const main = document.getElementById("page");
-  main.replaceChildren();
-  PAGES[pageId](main);
+// The little moon next to the site name in the header.
+document.querySelector(".logo-moon")?.append(createMoonDisc(0.15, { size: 26 }));
 
-  renderHeader(document.getElementById("header"), pageId);
-  window.scrollTo(0, 0);
-}
-
-window.addEventListener("hashchange", showPage);
-renderFooter(document.getElementById("footer"));
-showPage();
+const main = document.getElementById("page");
+main.replaceChildren(); // removes the plain text the page shipped with for search engines
+PAGES[document.body.dataset.page](main);

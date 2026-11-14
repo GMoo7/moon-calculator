@@ -1,0 +1,9 @@
+{
+  "name": "moon-calculator",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "check": "node tools/check.mjs"
+  }
+}

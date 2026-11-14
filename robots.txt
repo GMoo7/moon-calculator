@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gmoo7.github.io/moon-calculator/sitemap.xml

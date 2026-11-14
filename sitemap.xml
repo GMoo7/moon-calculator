@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://gmoo7.github.io/moon-calculator/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/"/>
+  </url>
+  <url>
+    <loc>https://gmoo7.github.io/moon-calculator/en/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/"/>
+  </url>
+  <url>
+    <loc>https://gmoo7.github.io/moon-calculator/it/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/"/>
+  </url>
+  <url>
+    <loc>https://gmoo7.github.io/moon-calculator/es/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/"/>
+  </url>
+  <url>
+    <loc>https://gmoo7.github.io/moon-calculator/en/week/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/week/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/week/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/week/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/en/week/"/>
+  </url>
+  <url>
+    <loc>https://gmoo7.github.io/moon-calculator/it/week/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/week/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/week/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/week/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/en/week/"/>
+  </url>
+  <url>
+    <loc>https://gmoo7.github.io/moon-calculator/es/week/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/week/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/week/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/week/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/en/week/"/>
+  </url>
+  <url>
+    <loc>https://gmoo7.github.io/moon-calculator/en/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/en/about/"/>
+  </url>
+  <url>
+    <loc>https://gmoo7.github.io/moon-calculator/it/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/en/about/"/>
+  </url>
+  <url>
+    <loc>https://gmoo7.github.io/moon-calculator/es/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/en/about/"/>
+  </url>
+</urlset>

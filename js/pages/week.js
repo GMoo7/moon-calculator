@@ -3,10 +3,11 @@
 import { el } from "../lib/dom.js";
 import { createLocationPicker } from "../components/locationPicker.js";
 import { createMoonDisc } from "../components/moonDisc.js";
+import { fill, text } from "../lib/i18n.js";
 import { loadLocation } from "../lib/storage.js";
 import { getMoonDay } from "../lib/moonDay.js";
 import { addDays, todayString } from "../lib/time.js";
-import { formatDate, formatPercent, formatTime } from "../lib/format.js";
+import { formatDate, formatPercent, formatTime, phaseName } from "../lib/format.js";
 
 const DAYS_SHOWN = 7;
 
@@ -26,26 +27,27 @@ function phaseCell(phase, south) {
   const box = el("div", "phase-cell");
   box.append(
     createMoonDisc(phase.fraction, { size: 24, south }),
-    el("span", "phase-name", phase.name),
+    el("span", "phase-name", phaseName(phase)),
     el("span", "dim", formatPercent(phase.illumination))
   );
   return box;
 }
 
 export function renderWeek(root) {
+  const words = text.ui.week;
   let location = loadLocation();
   const box = el("section", "week");
 
   function showTable() {
     box.replaceChildren();
     if (!location) {
-      box.append(el("p", "message", "Choose a city above to see the next 7 days."));
+      box.append(el("p", "message", words.chooseCity));
       return;
     }
 
     const zone = location.timezone;
     const table = el("table");
-    table.append(makeRow(["Date", "Moonrise", "Moonset", "Phase"], "th"));
+    table.append(makeRow(words.columns, "th"));
 
     const today = todayString(zone);
     for (let i = 0; i < DAYS_SHOWN; i++) {
@@ -63,15 +65,11 @@ export function renderWeek(root) {
 
     const wrap = el("div", "table-wrap");
     wrap.append(table);
-    box.append(
-      el("h2", "", location.name),
-      wrap,
-      el("p", "note", `Times are in ${zone} time. A dash (—) means the moon does not rise or set that day.`)
-    );
+    box.append(el("h2", "", location.name), wrap, el("p", "note", fill(words.note, { zone })));
   }
 
   root.append(
-    el("h1", "", "Moonrise times for the next 7 days"),
+    el("h1", "", words.title),
     createLocationPicker((chosen) => {
       location = chosen;
       showTable();

@@ -255,3 +255,20 @@ tr.today td {
   margin: 0;
   color: var(--muted);
 }
+
+/* The language chooser on the site's first page. */
+.language-list {
+  display: grid;
+  gap: 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.language-list a {
+  font-size: 1.4rem;
+}
+
+.language-list p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}

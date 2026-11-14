@@ -4,7 +4,7 @@
 import { el } from "../lib/dom.js";
 import { createLocationPicker } from "../components/locationPicker.js";
 import { animateMoonPhase, createMoonDisc } from "../components/moonDisc.js";
-import { HOME_TIPS, HOME_TIPS_TITLE } from "../content/homeText.js";
+import { fill, text } from "../lib/i18n.js";
 import { loadLocation } from "../lib/storage.js";
 import { getMoonDay, riseShiftMinutes } from "../lib/moonDay.js";
 import { moonPhase } from "../lib/moon.js";
@@ -12,10 +12,12 @@ import { addDays, browserTimeZone, todayString } from "../lib/time.js";
 import {
   formatBearing,
   formatDate,
-  formatPercent,
   formatShift,
   formatTime,
+  litText,
   missingText,
+  phaseLabel,
+  phaseName,
 } from "../lib/format.js";
 
 // A small label with a value under it, e.g. "Moonset" / "17:12".
@@ -25,15 +27,16 @@ function fact(label, value) {
   return box;
 }
 
-// The questions and answers under the result. Words come from js/content/homeText.js.
+// The questions and answers under the result. Words come from js/content/<language>/home.js.
 function buildTips() {
   const box = el("section", "prose tips");
-  box.append(el("h2", "", HOME_TIPS_TITLE));
-  for (const tip of HOME_TIPS) box.append(el("h3", "", tip.question), el("p", "", tip.answer));
+  box.append(el("h2", "", text.home.tipsTitle));
+  for (const tip of text.home.tips) box.append(el("h3", "", tip.question), el("p", "", tip.answer));
   return box;
 }
 
 export function renderHome(root) {
+  const words = text.ui.home;
   let location = loadLocation();
   let disc = null; // the moon drawing: kept, so its phase can change smoothly
   let discIsSouth = null;
@@ -41,7 +44,7 @@ export function renderHome(root) {
   const dateInput = el("input");
   dateInput.type = "date";
   dateInput.value = todayString(location?.timezone || browserTimeZone());
-  dateInput.setAttribute("aria-label", "Date");
+  dateInput.setAttribute("aria-label", words.dateLabel);
   dateInput.addEventListener("input", showResult);
 
   // A small "‹" or "›" button that moves the date by one day.
@@ -57,53 +60,52 @@ export function renderHome(root) {
   }
 
   const dateField = el("div", "date-field");
-  dateField.append(stepButton("Previous day", "‹", -1), dateInput, stepButton("Next day", "›", 1));
+  dateField.append(stepButton(words.previousDay, "‹", -1), dateInput, stepButton(words.nextDay, "›", 1));
 
   // The date arrows and the moon are never rebuilt, only the text changes.
-  const text = el("div", "hero-text");
+  const resultText = el("div", "hero-text");
   const moonBox = el("div", "hero-moon");
 
   // The text on the left: either the moonrise, or (before a city is chosen) today's phase.
   function fillText(date, day, phase) {
-    const lit = `${formatPercent(phase.illumination)} lit`;
-    text.replaceChildren(
+    resultText.replaceChildren(
       el("p", "hero-date", formatDate(date)),
-      el("p", "hero-place", location ? location.name : "No city chosen yet")
+      el("p", "hero-place", location ? location.name : words.noCity)
     );
 
     if (!day) {
-      text.append(
-        el("p", "hero-label", "Moon phase"),
-        el("p", "hero-time is-text", phase.name),
-        el("p", "hero-sub", `${lit}. Choose a city to see when the moon rises.`)
+      resultText.append(
+        el("p", "hero-label", words.moonPhase),
+        el("p", "hero-time is-text", phaseName(phase)),
+        el("p", "hero-sub", fill(words.chooseCity, { lit: litText(phase) }))
       );
       return;
     }
 
     const zone = location.timezone;
-    const riseText = day.rise ? formatTime(day.rise, zone) : missingText(day.status, "moonrise");
-    const setText = day.set ? formatTime(day.set, zone) : missingText(day.status, "moonset");
+    const riseText = day.rise ? formatTime(day.rise, zone) : missingText(day.status, "noRise");
+    const setText = day.set ? formatTime(day.set, zone) : missingText(day.status, "noSet");
     const facts = el("dl", "facts");
-    facts.append(fact("Moonset", setText), fact("Moon phase", `${phase.name}, ${lit}`));
+    facts.append(fact(words.moonset, setText), fact(words.moonPhase, phaseLabel(phase)));
 
-    text.append(
-      el("p", "hero-label", "Moonrise"),
+    resultText.append(
+      el("p", "hero-label", words.moonrise),
       el("p", day.rise ? "hero-time" : "hero-time is-text", riseText)
     );
     if (day.bearing !== null) {
-      text.append(el("p", "hero-sub", `Look ${formatBearing(day.bearing)} on the horizon.`));
+      resultText.append(el("p", "hero-sub", fill(words.look, { bearing: formatBearing(day.bearing) })));
     }
     if (day.rise) {
       const shift = formatShift(riseShiftMinutes(location, date, day.rise));
-      if (shift) text.append(el("p", "hero-sub", shift));
+      if (shift) resultText.append(el("p", "hero-sub", shift));
     }
-    text.append(facts, el("p", "note", `Times are in ${zone} time.`));
+    resultText.append(facts, el("p", "note", fill(words.timesIn, { zone })));
   }
 
   // First time (or when the hemisphere changes) draw the moon; after that, just change its phase.
   function showMoon(phase) {
     const isSouth = location ? location.lat < 0 : false;
-    const label = `${phase.name}, ${formatPercent(phase.illumination)} lit`;
+    const label = phaseLabel(phase);
     if (!disc || isSouth !== discIsSouth) {
       disc = createMoonDisc(phase.fraction, { size: 280, label, south: isSouth, rise: true });
       discIsSouth = isSouth;
@@ -125,14 +127,14 @@ export function renderHome(root) {
   // Everything above the tips sits in one grid, so the moon stays beside the date arrows.
   const stage = el("div", "stage");
   stage.append(
-    el("h1", "", "What time does the moon rise?"),
-    el("p", "lead", "Moonrise and moonset times for any city and date, with the moon phase and the direction to look."),
+    el("h1", "", text.home.title),
+    el("p", "lead", text.home.lead),
     createLocationPicker((chosen) => {
       location = chosen;
       showResult();
     }),
     dateField,
-    text,
+    resultText,
     moonBox
   );
   root.append(stage, buildTips());

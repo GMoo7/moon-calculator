@@ -59,3 +59,50 @@
   color: var(--muted);
   font-size: 0.85rem;
 }
+
+/* The little moon beside the site name (drawn by js/app.js; the space is kept so nothing jumps). */
+.logo-moon {
+  display: inline-flex;
+  width: 26px;
+  height: 26px;
+}
+
+/* Links to the same page in the other languages. */
+.langs {
+  display: flex;
+  gap: 0.9rem;
+  font-size: 0.85rem;
+}
+
+.langs a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.langs a:hover,
+.langs [aria-current] {
+  color: var(--bone);
+}
+
+/* Phones: a compact header, so the moon and the date arrows still fit on one screen
+   even when a language has a long site name. */
+@media (max-width: 640px) {
+  .bar {
+    gap: 0.35rem 1rem;
+    padding: 0.6rem 1.25rem;
+  }
+
+  .logo {
+    font-size: 0.95rem;
+  }
+
+  .menu {
+    flex-wrap: nowrap;
+    gap: 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .menu a {
+    white-space: nowrap;
+  }
+}

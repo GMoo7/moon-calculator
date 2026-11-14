@@ -1,0 +1,10 @@
+{
+  "siteUrl": "https://gmoo7.github.io/moon-calculator",
+  "defaultLanguage": "en",
+  "languages": ["en", "it", "es"],
+  "pages": [
+    { "id": "home", "path": "" },
+    { "id": "week", "path": "week" },
+    { "id": "about", "path": "about" }
+  ]
+}

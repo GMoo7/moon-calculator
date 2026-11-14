@@ -1,14 +1,25 @@
 <!DOCTYPE html>
+<!-- Written by tools/build.mjs from js/content/. Do not edit by hand: change the source and run the build. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Moonrise Calculator – What time does the moon rise tonight?</title>
+  <title>Moonrise Calculator – Moonrise and moonset times for any city and date.</title>
   <meta name="description" content="Free moonrise and moonset calculator. See what time the moon rises today, tonight or on any date for any city, plus the moon phase and which direction to look.">
   <meta name="theme-color" content="#0c1022">
+  <link rel="canonical" href="https://gmoo7.github.io/moon-calculator/">
+  <link rel="alternate" hreflang="en" href="https://gmoo7.github.io/moon-calculator/en/">
+  <link rel="alternate" hreflang="it" href="https://gmoo7.github.io/moon-calculator/it/">
+  <link rel="alternate" hreflang="es" href="https://gmoo7.github.io/moon-calculator/es/">
+  <link rel="alternate" hreflang="x-default" href="https://gmoo7.github.io/moon-calculator/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Moonrise Calculator – What time does the moon rise tonight?">
-  <meta property="og:description" content="Moonrise and moonset times for any city and date, with the moon phase and the direction to look.">
+  <meta property="og:site_name" content="Moonrise Calculator">
+  <meta property="og:title" content="Moonrise Calculator – Moonrise and moonset times for any city and date.">
+  <meta property="og:description" content="Free moonrise and moonset calculator. See what time the moon rises today, tonight or on any date for any city, plus the moon phase and which direction to look.">
+  <meta property="og:url" content="https://gmoo7.github.io/moon-calculator/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="it_IT">
+  <meta property="og:locale:alternate" content="es_ES">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%23efe9d6%22/><circle cx=%2270%22 cy=%2242%22 r=%2240%22 fill=%22%230c1022%22/></svg>">
   <link rel="preload" href="fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/base.css">
@@ -17,11 +28,28 @@
   <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
-  <header id="header"></header>
+  <header id="header"><div class="bar"><span class="logo">Moonrise Calculator</span></div></header>
   <main id="page">
-    <noscript>This calculator needs JavaScript. Please turn it on and reload.</noscript>
+    <div class="prose">
+      <h1>Choose your language · Scegli la tua lingua · Elige tu idioma</h1>
+      <ul class="language-list">
+        <li><a href="en/" hreflang="en" lang="en"><strong>English</strong></a><p lang="en">Moonrise and moonset times for any city and date.</p></li>
+        <li><a href="it/" hreflang="it" lang="it"><strong>Italiano</strong></a><p lang="it">Orari del sorgere e del tramonto della Luna per qualsiasi città e data.</p></li>
+        <li><a href="es/" hreflang="es" lang="es"><strong>Español</strong></a><p lang="es">Horas de salida y puesta de la Luna para cualquier ciudad y fecha.</p></li>
+      </ul>
+    </div>
   </main>
-  <footer id="footer"></footer>
-  <script type="module" src="js/app.js"></script>
+  <script>
+    // Old links like /#/week go to the visitor's language (or the default).
+    (function () {
+      var pages = {"home":"","week":"week/","about":"about/"};
+      var languages = ["en","it","es"];
+      var wanted = location.hash.replace("#/", "");
+      if (!pages.hasOwnProperty(wanted)) return;
+      var preferred = (navigator.languages || [navigator.language]).map(function (code) { return String(code).slice(0, 2); });
+      var lang = preferred.filter(function (code) { return languages.indexOf(code) > -1; })[0] || "en";
+      location.replace(lang + "/" + pages[wanted]);
+    })();
+  </script>
 </body>
 </html>
